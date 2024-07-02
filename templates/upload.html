@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Upload Video - Sammovie.com{% endblock %}
+{% block content %}
+<section class="container mt-5">
+    <div class="heading mb-4">
+        <h2 class="heading-title">Upload Video</h2>
+    </div>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="bg-dark p-4 rounded">
+        <div class="form-group">
+            <label for="title" class="text-white">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description" class="text-white">Description:</label>
+            <input type="text" id="description" name="description" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="thumbnail" class="text-white">Thumbnail File:</label>
+            <input type="file" id="thumbnail" name="thumbnail" class="form-control-file" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="video" class="text-white">Video File:</label>
+            <input type="file" id="video" name="video" class="form-control-file" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Upload</button>
+    </form>
+    <div class="mt-3">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Movie List</a>
+    </div>
+</section>
+{% endblock %}

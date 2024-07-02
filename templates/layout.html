@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sammovie.com{% endblock %}</title>
+
+    <!-- Link Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Link FONTS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- Link ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vd.css') }}">
+    <!-- link to Swiper -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/swiper-bundle.min.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-dark text-white py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Logo -->
+            <a href="{{ url_for('index') }}" class="logo text-white">
+                Sam<span class="text-warning">movie</span>
+            </a>
+            <!-- Search Box -->
+       <!-- Search Box -->
+        <div class="search-box">
+            <form action="{{ url_for('search') }}" method="GET" class="form-inline">
+                <input type="search" class="form-control" name="q" id="search-input" placeholder="Search movie">
+            </form>
+        </div>
+
+            <!-- User Links -->
+            <div class="user-links">
+                {% if session.get('username') %}
+                    <span class="text-white mr-3">Hello, {{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary mr-2">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
+                {% endif %}
+            </div>
+            <!-- NavBar -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="{{ url_for('index') }}" class="nav-link nav-active">
+                                <i class="fa-solid fa-house"></i>
+                                <span class="nav-link-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#popular" class="nav-link">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="nav-link-title">Trending</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#movies" class="nav-link">
+                                <i class="fa-solid fa-compass"></i>
+                                <span class="nav-link-title">Explore</span>
+                            </a>
+                        </li>
+                        {% if session.get('role') == 'admin' %}
+                        <li class="nav-item">
+                            <a href="{{ url_for('upload') }}" class="nav-link">
+                                <i class="fa-solid fa-tv"></i>
+                                <span class="nav-link-title">Upload</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('manage_users') }}" class="nav-link">
+                                <i class="fa-solid fa-users"></i>
+                                <span class="nav-link-title">Manage Users</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link">
+                                <i class="fa-regular fa-heart"></i>
+                                <span class="nav-link-title">Favourite</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Next Page -->
+    <div class="next-page text-center py-3">
+        <a href="#" class="btn btn-primary">Next Page</a>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright bg-dark text-center text-white py-2">
+        <p>&#169; Sammovie page</p>
+    </div>
+
+    <!-- link to Swiper JS -->
+    <script src="{{ url_for('static', filename='js/swiper-bundle.min.js') }}"></script>
+    <!-- link to JS -->
+    <script src="{{ url_for('static', filename='js/vd.js') }}"></script>
+    <!-- Link Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Edit User - Sammovie.com{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Edit User</h1>
+    <form action="{{ url_for('edit_user', user_id=user[0]) }}" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user[1] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password">
+        </div>
+        <div class="form-group" style="display:none">
+            <label for="role">Role</label>
+            <select class="form-control" id="role" name="role" required>
+                <option value="user" {% if user[2] == 'user' %}selected{% endif %}>User</option>
+                <option value="admin" {% if user[2] == 'admin' %}selected{% endif %}>Admin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update User</button>
+        <a href="{{ url_for('manage_users') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block title %}Home - Sammovie.com{% endblock %}
+{% block content %}
+<!-- Home -->
+<section class="home container mt-5" id="home">
+    <!-- Home image -->
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{{ url_for('static', filename='img/onepice.jpg') }}" alt="" class="img-fluid rounded">
+        </div>
+        <!-- Home Text -->
+        <div class="col-md-4 d-flex flex-column justify-content-center">
+            <h1 class="home-title">One Piece<br>Wano Quốc</h1>
+            <p>2023</p>
+            <a href="#" class="btn btn-warning mt-3">
+                <i class="fa-solid fa-play"></i>
+                <span>Xem phim</span>
+            </a>
+        </div> 
+    </div>
+</section>
+<!-- Home End -->
+
+<!-- Popular Section Start -->
+<section class="popular container mt-5" id="popular">
+    <!-- Heading -->
+    <div class="heading mb-4">
+        <h2 class="heading-title">Popular Movies</h2>
+        <!-- Swiper Buttons -->
+        <div class="swiper-btn">
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>  
+        </div>
+    </div>
+    <!-- Content -->
+    <div class="popular-content swiper">
+        <div class="swiper-wrapper">
+            {% if videos %}
+            <!-- Movies Box -->
+            <div class="swiper-slide">
+                <div class="movie-box card">
+                    <img src="{{ url_for('static', filename=videos[0][3].replace('static/', '')) }}" alt="" class="card-img-top movie-box-img">
+                    <div class="card-body box-text">
+                        <h5 class="card-title movie-title">{{ videos[0][1] }}</h5>
+                        <p class="card-text movie-type">{{ videos[0][2] }}</p>
+                        <a href="{{ url_for('view_video', video_id=videos[0][0]) }}" class="btn btn-primary watch-btn play-btn">
+                            <i class="fa-solid fa-play"></i>
+                        </a>
+                        {% if session.get('role') == 'admin' %}
+                        <form action="{{ url_for('delete_video', video_id=videos[0][0]) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+<!-- Popular Section End -->
+
+<!-- Movies Section Start -->
+<section class="movie container mt-5" id="movies">
+    <!-- Heading -->
+    <div class="heading mb-4">
+        <h2 class="heading-title">Movies and Shows</h2>
+    </div>
+    <!-- Movie Content -->
+    <div class="row">
+        {% for video in videos %}
+        <!-- Movies Box -->
+        <div class="col-md-3">
+            <div class="movie-box card mb-4">
+                <img src="{{ url_for('static', filename=video[3].replace('static/', '')) }}" alt="" class="card-img-top movie-box-img">
+                <div class="card-body box-text">
+                    <h5 class="card-title movie-title">{{ video[1] }}</h5>
+                    <p class="card-text movie-type">{{ video[2] }}</p>
+                    <a href="{{ url_for('view_video', video_id=video[0]) }}" class="btn btn-primary watch-btn play-btn">
+                        <i class="fa-solid fa-play"></i>
+                    </a>
+                    {% if session.get('role') == 'admin' %}
+                    <form action="{{ url_for('delete_video', video_id=video[0]) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- Movies Section End -->
+{% endblock %}

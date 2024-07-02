@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Search Results - Sammovie.com{% endblock %}
+{% block content %}
+<section class="container mt-5">
+    <h2>Search Results for "{{ query }}"</h2>
+    <div class="row">
+        {% for video in videos %}
+        <div class="col-md-3">
+            <div class="movie-box card mb-4">
+                <img src="{{ url_for('static', filename=video[3].replace('static/', '')) }}" alt="" class="card-img-top movie-box-img">
+                <div class="card-body box-text">
+                    <h5 class="card-title movie-title">{{ video[1] }}</h5>
+                    <p class="card-text movie-type">{{ video[2] }}</p>
+                    <a href="{{ url_for('view_video', video_id=video[0]) }}" class="btn btn-primary watch-btn play-btn">
+                        <i class="fa-solid fa-play"></i>
+                    </a>
+                    {% if session.get('role') == 'admin' %}
+                    <form action="{{ url_for('delete_video', video_id=video[0]) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
